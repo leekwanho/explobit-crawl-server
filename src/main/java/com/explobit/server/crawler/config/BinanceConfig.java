@@ -1,36 +1,21 @@
 package com.explobit.server.crawler.config;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Service;
+import com.binance.api.client.BinanceApiClientFactory;
+import com.binance.api.client.BinanceApiRestClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-
-@Service
+@Configuration
 public class BinanceConfig {
 
-    @Value("${firebase-database.database-url}")
-    private String firebaseUrl;
-    @Value("${firebase-database.json-file-name}")
-    private String firebaseJsonName;
-
-    @PostConstruct
-    public void firebaseInitialize() throws IOException {
-        Resource resource = new ClassPathResource(firebaseJsonName);
-        InputStream inputStream = resource.getInputStream();
-
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(inputStream))
-                .setDatabaseUrl(firebaseUrl)
-                .build();
-
-        FirebaseApp.initializeApp(options);
+    @Bean
+    public BinanceApiRestClient binanceInitialize() {
+        BinanceApiClientFactory factory =
+                BinanceApiClientFactory.newInstance(
+                        "ejrPiM7iA8HIYqKxNIit9ANeXZfY6RwRCvV1kYQvPLs7qeICc7rQ5VqsU9VqeFyX",
+                        "rb9mHcydDKGAUZUMlzDog0gvH9nAaCoHLSwaxpxCWA5nXymDZzmFLQMCUI34KY84");
+        return factory.newRestClient();
     }
 
 }

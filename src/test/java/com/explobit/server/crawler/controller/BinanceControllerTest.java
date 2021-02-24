@@ -8,6 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -23,7 +27,8 @@ class BinanceControllerTest {
     @Test
     public void test() throws Exception {
         //given
-        BinanceDto binanceDto = new BinanceDto();
+        List<Map<String, String>> list = new ArrayList<>();
+        BinanceDto binanceDto = new BinanceDto(list, "test");
         given(firebaseService.getBinanceData(anyString())).willReturn(binanceDto);
 
         //when

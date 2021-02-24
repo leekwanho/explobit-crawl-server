@@ -24,7 +24,7 @@ public class BinanceServiceImpl implements FirebaseService {
     @Override
     public String insertBinanceData(BinanceDto binanceDto) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> apiFuture =
-                firestore.collection(binanceCollectionName).document(binanceDto.getId()).set(binanceDto);
+                firestore.collection(binanceCollectionName).document().set(binanceDto);
 
         return apiFuture.get().getUpdateTime().toString();
     }
